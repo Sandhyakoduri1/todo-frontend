@@ -4,6 +4,7 @@ import TaskList from "./components/TaskList";
 import "./App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -22,7 +23,7 @@ function App() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:8080/tasks");
+      const response = await fetch(`${API_BASE_URL}/tasks`);
       const data = await response.json();
       setTasks(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -61,7 +62,7 @@ function App() {
 
   const handleComplete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/tasks/${id}/complete`, {
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}/complete`, {
         method: "PUT",
       });
       const updatedTask = await response.json();
@@ -77,7 +78,7 @@ function App() {
 
   const handlePending = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/tasks/${id}/pending`, {
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}/pending`, {
         method: "PUT",
       });
       const updatedTask = await response.json();
@@ -101,7 +102,7 @@ function App() {
   }
 
   try {
-    await fetch(`http://localhost:8080/tasks/${task.id}`, {
+    await fetch(`${API_BASE_URL}/tasks/${task.id}`, {
       method: "DELETE",
     });
 

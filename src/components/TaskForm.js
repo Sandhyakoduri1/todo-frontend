@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
+
 function TaskForm({ onTaskAdded, onTaskUpdated, editingTask, onCancelEdit }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,7 +36,7 @@ function TaskForm({ onTaskAdded, onTaskUpdated, editingTask, onCancelEdit }) {
       let response;
 
       if (editingTask) {
-        response = await fetch(`http://localhost:8080/tasks/${editingTask.id}`, {
+        response = await fetch(`${API_BASE_URL}/tasks/${editingTask.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -49,7 +51,7 @@ function TaskForm({ onTaskAdded, onTaskUpdated, editingTask, onCancelEdit }) {
         const updatedTask = await response.json();
         onTaskUpdated(updatedTask);
       } else {
-        response = await fetch("http://localhost:8080/tasks", {
+        response = await fetch(`${API_BASE_URL}/tasks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
